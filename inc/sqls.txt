@@ -1,0 +1,41 @@
+select schedule.schedule_id, schedule.client_id, 
+schedule.machine_id, pms.schedule_id, pms.service_date,pms.service_done, clients.client_name from ((schedule INNER join pms on
+ schedule.schedule_id = pms.schedule_id)
+   INNER JOIN clients on schedule.client_id = clients.client_id) where schedule.status = 0;
+   
+   // sql for schedule
+   select schedule.schedule_id, schedule.client_id, 
+schedule.machine_id, schedule.status, clients.client_name, machine.machine_id, machine.machine_model from ((schedule INNER join clients on
+ schedule.client_id = clients.client_id)
+   INNER JOIN machine on machine.machine_id = schedule.machine_id) where schedule.status = 0;
+   
+   select contract.contract_id, contract.client_id, contract.machine_id, schedule.schedule_date, clients.client_name, 
+   machine.machine_model from ((contract INNER join schedule on contract.contract_id = schedule.contract_id)
+   left join clients on contract.client_id = clients.client_id)
+left join machine on schedule.machine_id = machine.machine_id;
+   
+   select schedule.schedule_id, schedule.client_id, schedule.contract_id, schedule.machine_id, schedule.schedule_date,schedule.status, clients.client_name, clients.client_address, machine.machine_model from ((contract right join schedule on contract.contract_id = 
+   schedule.contract_id) left join clients on clients.client_id = contract.client_id) 
+   left join machine on machine.machine_id = contract.machine_id;
+   
+  sql for contract pms
+  select contract.contract_id, contract.client_id, contract.machine_id, contract.frequency, contract.turn_over,contract.coverage, contract.status, clients.client_name, 
+  clients.client_address, machine.machine_model from 
+  ((contract left join clients on contract.client_id = clients.client_id) left join machine on contract.machine_id = machine.machine_id);
+  
+  schedule
+  SELECT pms.schedule_id, schedule.client_id, clients.client_name, clients.client_address from 
+  ((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id);
+  
+  select pms.pms_id, schedule.schedule_id, contract.contract_id from ((pms left join schedule on pms.schedule_id = schedule.schedule_id )
+  left join contract on schedule.contract_id = contract.contract_id);
+  
+  tms
+  tms_user
+  MTvZ_4$6a_)X8&yW
+  
+  epiz_32695546!
+  llJ3CaRsMchRotc
+  mysql host: sql104.epizy.com
+  mysql uname: epiz_32695546
+  dbname: epiz_32695546_tms
