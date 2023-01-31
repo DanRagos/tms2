@@ -205,7 +205,7 @@
 		
             if ($client == "null" &&   $service_by == "null") {
 				
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.rep_problem, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id) where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and schedule.status = '2' GROUP BY pms.schedule_id";  
                 $result = mysqli_query($conn, $sql);  
                 while($row = mysqli_fetch_array($result)) {
@@ -230,6 +230,7 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 <td>'.$row['rep_problem'].'</td>
                      
                     </tr>';  
                 }
@@ -240,7 +241,7 @@ $clientName = substr($guest, 0, $last_space);
 
         }
             } elseif ($client != "null" && $service_by !="null") {
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.rep_problem, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id)where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and clients.client_id = '$client' and pms.service_by = '$service_by'
 				and schedule.status = '2' GROUP BY pms.schedule_id";  
                 $result = mysqli_query($conn, $sql);  
@@ -254,11 +255,12 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 <td>'.$row['rep_problem'].'</td>
                     </tr>'; 
                 }
             }
 			elseif ($client != "null" && $service_by =="null") {
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model, schedule.rep_problem,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id)  where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and clients.client_id = '$client' and schedule.status = '2' GROUP BY pms.schedule_id";  
                 $result = mysqli_query($conn, $sql);  
                 while($row = mysqli_fetch_array($result)) {
@@ -271,11 +273,12 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 <td>'.$row['rep_problem'].'</td>
                     </tr>'; 
                 }
             }
 			elseif ($client == "null" && $service_by !="null") {
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model, schedule.rep_problem, schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id)   where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and pms.service_by = '$service_by' and schedule.status = '2'  GROUP BY pms.schedule_id";  
                 $result = mysqli_query($conn, $sql);  
                 while($row = mysqli_fetch_array($result)) {
@@ -299,6 +302,7 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						<td>'.$row['rep_problem'].'</td>
                     </tr>'; 
                 }
             }
@@ -308,7 +312,7 @@ $clientName = substr($guest, 0, $last_space);
 		
             if ($client == "null" &&   $service_by == "null") {
 				
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date,schedule.rep_problem, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id)  where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and schedule.status = '3' GROUP BY pms.schedule_id ";  
                 $result = mysqli_query($conn, $sql);  
                 while($row = mysqli_fetch_array($result)) {
@@ -335,12 +339,13 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 <td>'.$row['rep_problem'].'</td>
                      
                     </tr>';  
                 }
 			
             } elseif ($client != "null" && $service_by !="null") {
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.rep_problem, schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id)  where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and clients.client_id = '$client' and pms.service_by = '$service_by'
 				and schedule.status = '3' GROUP BY pms.schedule_id";  
                 $result = mysqli_query($conn, $sql);  
@@ -354,11 +359,12 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 <td>'.$row['rep_problem'].'</td>
                     </tr>'; 
                 }
             }
 			elseif ($client != "null" && $service_by =="null") {
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.rep_problem, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id) where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and clients.client_id = '$client' and schedule.status = '3' GROUP BY pms.schedule_id ";  
                 $result = mysqli_query($conn, $sql);  
                 while($row = mysqli_fetch_array($result)) {
@@ -371,11 +377,12 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 td>'.$row['rep_problem'].'</td>
                     </tr>'; 
                 }
             }
 			elseif ($client == "null" && $service_by !="null") {
-                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model,  schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
+                $sql = "SELECT pms.schedule_id, pms.service_date, pms.service_by, pms.status, schedule.schedule_date, schedule.model, schedule.rep_problem,   schedule.guest, schedule.client_id, clients.client_name, schedule.machine_type, schedule.model, clients.client_address, machine_type.machine_name from (((pms inner join schedule on pms.schedule_id = schedule.schedule_id) left join clients on schedule.client_id = clients.client_id)
 				left join machine_type on schedule.machine_type = machine_type.machine_id)  where pms.service_date BETWEEN '$date_from' and '$date_to' AND schedule.contract_id ='' and pms.service_by = '$service_by' and schedule.status = '3' GROUP BY pms.schedule_id";  
                 $result = mysqli_query($conn, $sql);  
                 while($row = mysqli_fetch_array($result)) {
@@ -399,6 +406,7 @@ $clientName = substr($guest, 0, $last_space);
                         <td>'.$row['schedule_date'].'</td>  
                         <td>'.$row['service_date'].'</td>
                         <td>'.$row['service_by'].'</td>
+						 <td>'.$row['rep_problem'].'</td>
                     </tr>'; 
                 }
             }
@@ -666,6 +674,7 @@ $clientName = substr($guest, 0, $last_space);
                     <th width="15%">Schedule Date</th>
                     <th width="15%">Service Date</th>
                     <th width="15%">Service By</th>	
+					<th width="15%">Reported Problem</th>	
                 </tr>';
             } 
 			 
