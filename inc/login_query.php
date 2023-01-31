@@ -21,6 +21,7 @@
 				$_SESSION['lastname']=$row['lastname'];
 				$_SESSION['type']= $row['type'];
 				$_SESSION['id']= $row['mem_id'];
+				$_SESSION['type']= $row['type'];
 				
 			echo " <script>alert('Welcome')</script>
 				<script>window.location = '../pages/dashboard.php'</script> ";

@@ -1,15 +1,20 @@
+<?php  require '../vendor/autoload.php'; ?>
+
 <script src="../assets/js/core/jquery-3.6.0.min.js"></script>
   <script src="../assets/js/core/jquery-3.6.0.js"></script>
  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../service-worker.js"></script>
+ <script src="../push-notifications-cdn.js"></script>
+
+ 
   <script src="../assets/js/datatable/jquery.dataTables.min.js"></script>
   <script src="../assets/js/plugins/moment.min.js"></script>
    <script src="../assets/js/plugins/daterangepicker.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/fullcalendar/lib/main.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>  
-  <script src="../assets/js/plugins/script.js"></script>
   <script>
+
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -17,13 +22,9 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-	 var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
 	
-		$(document).ready(function () {
-		$('#dataTable').DataTable({
-            "responsive": true
-        });
-	});
+	
+		
 	  function ChangeDoc(form) {
             var selIndex = form.options.selectedIndex;
             let getFormArr = document.querySelectorAll(".modal-body form");
@@ -74,5 +75,6 @@ $(function() {
   });
 
 });
- 
+
+
 </script>

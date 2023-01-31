@@ -12,16 +12,17 @@
               </div>
               <div class="card-body">
                 <form role="form text-left" action="../inc/addClientMachine.php" method="post" autocomplete="off"> 
+				<input type="hidden" name="client_name" value = "<?php echo $fetch['client_name'] ?> " >
 				 
-			<div class="input-group input-group-outline my-3">
-			<select class="form-control" id="machine_type" name="machineType">			
+			<div class="input-group input-group-static my-3">
+			<select class="form-control" id="machine_type" name="machineType"required>			
            <option selected value="" >Enter Machine Type </option>
 		    <?php
-                                        $sql = "SELECT * FROM machine";
+                                        $sql = "SELECT * FROM machine_type";
                                         $result = $conn->query($sql);
                                         while ($row = $result -> fetch_assoc()){
                                     ?>
-                                    <option value = "<?php echo $row['machine_id']?>"><?php echo $row['machine_model']?></option>
+                                    <option value = "<?php echo $row['machine_id']?>"><?php echo $row['machine_name']?></option>
 									<?php
                                          }
                                     ?>
@@ -37,24 +38,37 @@
 			</select>
 			</div>      
 -->			
-				<div class="input-group input-group-outline my-3">
-                    <input  name="datefilter" class="form-control" autocomplete=off>
-				<label class="form-label">Turn Over / Coverage Date</label>
+		<div class="input-group input-group-static my-3">
+			<label >Brand</label>
+                <input  name="brand" class="form-control" required>
+        </div>
+		<div class="input-group input-group-static my-3">
+			<label >Model</label>
+                <input  name="model" class="form-control" required>
+        </div>
+				<div class="input-group input-group-static my-3">
+				<label >Turn Over / Coverage Date</label>
+                    <input  name="datefilter" class="form-control" required>
+				
 					
                   </div>
+				 <div class="input-group input-group-static my-3">
+				<label>First PMS Schedule Date</label>
+					<input type="date" name="firstpms" class="form-control" required>
+				</div>
 				  
-				 <div class="input-group input-group-outline my-3">
-				  <select class="form-control" name="frequency">
+				 <div class="input-group input-group-static my-3">
+				  <select class="form-control" name="frequency" required>
 				<option selected value="">Frequency</option>
                 <option value = "Annually">Annually</option>
 				<option value = "Semi-Annually">Semi-Annually</option>
 				 <option value = "Quarterly">Quarterly</option>									                                 
 				</select>
 				</div>
-					 <div class="input-group input-group-outline my-3">
-				  <select class="form-control" name="status">
+					 <div class="input-group input-group-static my-3">
+				  <select class="form-control" name="status" required>
 				<option selected value="">Status</option>
-                <option value = "Under Pms Contract">Under PMS Warranty</option>
+                <option value = "Under Pms Contract ">Under PMS Contract</option>
 				<option value = "Installation Warranty">Installation Warranty</option>							                                 
 				</select>
 				</div>
@@ -77,6 +91,163 @@
       </div>
     </div>
   </div>
+<!-- -->
+<div class="col-md-4">
+    <div class="modal fade" id="edit<?php echo  $client_id  ?>" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="responsive card-header pb-0 text-center">
+
+                <center> <p class="align-items-center"> <?php echo $fetch['client_name']?> </p> </center>
+
+              </div>
+              <div class="card-body">
+                <form  action = "../inc/addClient.php" method = "POST" autocomplete="off"> 
+				 <input type = "text" name="client_id" value= " <?php echo $client_id ?> "hidden> 
+			 <div class="input-group input-group-static mb-4">
+			<label>Client Name</label>
+		<input name="client_name" type="textarea" value="<?php echo $fetch['client_name']?>" class="form-control">
+		</div>
+		 <div class="input-group input-group-static mb-4">
+			<label>Address</label>
+		<input name="address" type="textarea" value="<?php echo $fetch['client_address']?>" class="form-control">
+		</div>
+		 <div class="input-group input-group-static mb-4">
+			<label>Contact Person</label>
+		<input name="contact_person" type="textarea" value="<?php echo $fetch['contact_person']?>" class="form-control">
+		</div>
+		 <div class="input-group input-group-static mb-4">
+			<label>Email</label>
+		<input name="email" type="textarea" value="<?php echo $fetch['contact_email']?>" class="form-control">
+		</div>
+		
+		 
+			   
+                
+                
+                  <div class="text-center">
+                    <button type="submit" name="edit_client" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Edit Client </button>
+                  </div>
+                </form>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<div class="col-md-4">
+    <div class="modal fade" id="pmsScheds<?php echo  $fetch['contract_id']  ?>" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="responsive card-header pb-0 text-center">
+
+                <center> <p class="align-items-center"> <?php echo $fetch['client_name']?> </p> </center>
+
+              </div>
+              <div class="card-body">
+			   <div class="table-responsive p-0">
+			   
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+					  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>			
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+					   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder ps">Action</th>
+					  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder ps-2">Status</th>
+					
+                   
+                    </tr>
+                  </thead>
+                  <tbody class="scroll">
+				  	<?php 
+					$num = 0;
+				$contract_id= $fetch['contract_id']; 
+				$pmsc = mysqli_query($conn, "Select * from schedule where schedule.contract_id ='$contract_id' ");
+							while($fetch2 = mysqli_fetch_array($pmsc)){	
+							$date_sched = $fetch2['schedule_date'];
+	$date_sched = date('F d, Y', strtotime($date_sched));
+	
+			?>
+                    <tr>
+				 <td class="align-middle text-center text-sm">
+				       <span class=""><?php echo $num + 1?></span>
+</td>				 
+             
+			<td>
+			 	<form method="post" action="../inc/edit_schedule.php">
+                        <div class="d-flex px-2 py-1">
+					
+                         
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"><input  type="date" name="schedule_date" value="<?php echo date('Y-m-d', strtotime($date_sched));;?>"> </input></h6>
+                         
+                          </div>
+                        </div>
+						<input type="hidden" name="contract_id" value = "<?php echo $fetch2['contract_id'] ?>" />
+						<input type = "hidden" name = "schedule_id" value = "<?php echo $fetch2['schedule_id'] ?>" />
+						<td>
+						 <button class="btn btn-primary btn-sm rounded" name="edit_schedules" type="submit" ><i class="fa fa-save"></i> Edit</button>
+						  </form>
+						</td>
+						
+                      </td>
+					    <td class="align-middle text-center text-sm">
+						<?php if ($fetch2['status'] == '2') {
+							$stats = "DONE" ;
+							$badge = "badge badge-sm bg-gradient-success";
+						}
+						 elseif($fetch2['status'] == '1') {
+							$stats = "DELAYED" ;
+							$badge = "badge badge-sm bg-gradient-warning";
+						}
+						elseif($fetch2['status'] == '4') {
+							$stats = "Lapsed" ;
+							$badge = "badge badge-sm bg-black";
+						}
+						 else {
+							$stats = "NOT DONE" ;
+							$badge = "badge badge-sm bg-gradient-info";
+						}
+						?>
+                        <span class="<?php echo $badge?>"><?php echo $stats?></span>
+						
+                      </td>
+					
+					  </tr>
+				 
+			
+			
+							<?php 
+							$num++;}?>
+		
+		 
+			      </tbody>
+                </table>
+				</div>
+				</div>
+                </div>
+                 <div class="card-footer">
+                        <div class="text-center">                    
+							<button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+                        </div>
+            </div>
+                
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <!-- for edit contract id in pms.php -->
 <div class="col-md-4">
   <div class="modal fade" id="con<?php echo $contract_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
@@ -124,11 +295,12 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn bg-gradient-primary">Send message</button>
+          
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 
@@ -188,3 +360,21 @@
       </div>
     </div>
   </div>
+      <div class="modal fade" id="del<?php echo $fetch['report_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+				<p> Delete file <?php echo $fetch['report_name'] ;?> ?</p>
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                    <a href="../inc/file_deleted.php?report_id=<?php echo $fetch['report_id']?>" class="btn btn-danger mx-1" type="button" id="<?php echo $fetch['report_id']?>"><i class="fa fa-trash"></i> Remove</a></button>
+						
+                </div>
+				
+            </div>
+        </div>
+    </div>

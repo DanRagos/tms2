@@ -28,12 +28,15 @@
                 var _details = $('#event-details-modal')
                 var id = info.event.id
                 if (!!scheds[id]) {
+					
                     _details.find('#title').text(scheds[id].title)
+					 _details.find('#type').text(scheds[id].type)
 						_details.find('#stats').text(scheds[id].sched_status)
                     _details.find('#service_date').text(scheds[id].sdate)
 					_details.find('#address').text(scheds[id].cl_address)
 					_details.find('#machine').text(scheds[id].machine)
-                    _details.find('#edit,#delete').attr('data-id', id)
+					_details.find('#problem').text(scheds[id].reps)
+                    _details.find('#edit,#resched,#delete').attr('data-id', id)
                     _details.modal('show')
                 } else {
                     alert("Event is undefined");
@@ -64,6 +67,24 @@
                 _form.find('[name="description"]').val(scheds[id].description)
                 _form.find('[name="schedule_date"]').val(String(scheds[id].schedule_date).replace(" ", "T"))
                 _form.find('[name="end_datetime"]').val(String(scheds[id].pms_end).replace(" ", "T"))
+				_form.find('[name="remarks"]').val(scheds[id].remarks)
+                $('#event-details-modal').modal('hide')
+                _form.find('[name="title"]').focus()
+            } else {
+                alert("Event is undefined");
+            }
+        })
+	   $('#resched').click(function() {
+              var id = $(this).attr('data-id')
+            if (scheds[id]) {
+                var _form = $('#resched-form')
+                console.log(scheds[id].title)
+                _form.find('[name="id"]').val(scheds[id].schedule_id)
+                _form.find('[name="title"]').val(scheds[id].title)
+                _form.find('[name="description"]').val(scheds[id].description)
+                _form.find('[name="schedule_date"]').val(String(scheds[id].schedule_date).replace(" ", "T"))
+                _form.find('[name="end_datetime"]').val(String(scheds[id].pms_end).replace(" ", "T"))
+				_form.find('[name="remarks"]').val(scheds[id].remarks)
                 $('#event-details-modal').modal('hide')
                 _form.find('[name="title"]').focus()
             } else {
@@ -74,13 +95,14 @@
         // Delete Button / Deleting an Event
         $('#delete').click(function() {
             var id = $(this).attr('data-id')
-            if (!!scheds[id]) {
+            if (scheds[id].type == "svc") {
                 var _conf = confirm("Are you sure to delete this scheduled event?");
                 if (_conf === true) {
-                    location.href = "./delete_schedule.php?id=" + id;
+                    location.href = "../inc/delete_schedule.php?id=" + id;
                 }
             } else {
-                alert("Event is undefined");
+                alert("You can't delete a PMS Schedule");
             }
         })
     })
+	

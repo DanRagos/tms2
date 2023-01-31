@@ -1,3 +1,4 @@
+
 <div class="col-md-4">
     <div class="modal fade" id="addDetails7" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal" role="document">

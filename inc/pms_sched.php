@@ -2,10 +2,10 @@
 require_once('../inc/dbc.inc.php');
 $date_today = date('Y-m');
 $sched_res = [];
-$query = mysqli_query($conn, "  select schedule.schedule_id, schedule.client_id, 
-schedule.machine_id, schedule.schedule_date,schedule.status, clients.client_name,clients.client_address, machine.machine_model from ((schedule INNER join clients on
+$query = mysqli_query($conn, "select schedule.schedule_id, schedule.client_id, schedule.contract_id,
+schedule.model, schedule.schedule_date,schedule.status, schedule.guest, schedule.rep_problem, clients.client_name,clients.client_address from (schedule left join clients on
  schedule.client_id = clients.client_id)
-   INNER JOIN machine on machine.machine_id = schedule.machine_id) where schedule.status != '2'") or die(mysqli_error());
+  where schedule.status != '2'") or die(mysqli_error());
 while($row = mysqli_fetch_array($query)){
     $row['sdate'] = date("F d, Y",strtotime($row['schedule_date']));
 	$date1 = date("Y-m",strtotime($row['sdate']));
@@ -15,6 +15,8 @@ while($row = mysqli_fetch_array($query)){
 		$result2=$conn->query($query2);
 		echo $schedule_id;	
 	}
+	
+	
 	$row['edate'] = $row['client_id'];
 	switch($row['status']) 
 	{case 0:
@@ -33,12 +35,45 @@ while($row = mysqli_fetch_array($query)){
 	$row['color'] = "Orange";
 	$row['sched_status'] = "Unresolved";
 	break;
+	case 4:
+	$row['color'] = "Black";
+	$row['sched_status'] = "Lapsed";
+	break;
 	}
 		
-	$row['machine'] = $row['machine_model'];
+
+	$row['machine'] = $row['model'];
+	
+	if (!$row['contract_id']) {
+		$row['type'] = 'svc';
+		  if ($row['guest']) {
+		$guest = $row['guest'];
+		$last_space = strrpos($guest, ' / ');
+		$clientAddress = substr($guest, $last_space + 2);
+		$clientName = substr($guest, 0, $last_space - 0);
+		$row['title'] = 'SVC '.$clientName ;
+		$row['cl_address'] = $clientAddress;
+		
+	   }
+	   else {
+		  $row['title'] = 'SVC '.$row['client_name'];
+		    	$row['cl_address'] = $row['client_address'];
+
+	   }
+	   $row['reps'] = $row['rep_problem'];
+		
+	}
+	else {
+		$row['type'] = 'pms';
+	$row['title'] = 'PMS '.$row['client_name'] ;
 	$row['cl_address'] = $row['client_address'];
-	$row['title'] = $row['client_name'] ;
+	$row['reps'] = '' ;
+	
+	}
+	$row['remarks'] = $row['contract_id'] ;
+
    $sched_res[$row['schedule_id']] = $row;
+   
 				
 		
 

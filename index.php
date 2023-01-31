@@ -29,7 +29,7 @@ session_destroy();
 					<div id="checK_password"></div>					
 					<input type="password" name="password" minlength="8" placeholder="Password" required>		
                     <input type="password" name="cpassword" minlength="8" placeholder="Confirm Password" required>	
-					<button href="#" name="signup">Sign Up</button>
+					<button type="text"  name="signup">Sign Up</button>
                 </form>
             </div>
             <div class="form-container sign-in-container">
@@ -63,8 +63,8 @@ session_destroy();
 			<p>&copy; Copyright 2022 KVP Healthcare Inc.<a href="#">Management System</a></p>
 		</div>
 	</footer>
-<script src="js/jquery-3.4.1.js"></script>
-<script src="js/script.js"></script>
+<script src="assets/js/core/jquery-3.6.0.min.js"></script>
+ <script src="assets/js/core/jquery-3.6.0.js"></script>
     <script>
     	const signUpButton = document.getElementById('signUp');
     	const signInButton = document.getElementById('signIn');
