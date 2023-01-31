@@ -668,13 +668,13 @@ $clientName = substr($guest, 0, $last_space);
 	if ($table_name =='svc') {
                 $content .= '
                 <tr align="center">
-                  <th width="20%">Client Name</th>  
-                    <th width="20%">Address</th>  
-                    <th width="15%">Machine</th>  
-                    <th width="15%">Schedule Date</th>
-                    <th width="15%">Service Date</th>
-                    <th width="15%">Service By</th>	
-					<th width="15%">Reported Problem</th>	
+                  <th>Client Name</th>  
+                    <th>Address</th>  
+                    <th >Machine</th>  
+                    <th>Schedule Date</th>
+                    <th >Service Date</th>
+                    <th>Service By</th>	
+					<th>Reported Problem</th>	
                 </tr>';
             } 
 			 
@@ -792,6 +792,7 @@ $clientName = substr($guest, 0, $last_space);
                     <th class='text-center' width='20%'>Address</th>  
                     <th class='text-center' width='15%'>Machine</th>  
                     <th class='text-center' width='15%'>Schedule Date</th>
+					
                
                             </tr>";
 								}
@@ -799,11 +800,12 @@ $clientName = substr($guest, 0, $last_space);
                             echo "
                             <tr>
                               <th class='text-center' width='20%'>Client</th>  
-                    <th class='text-center' width='20%'>Address</th>  
-                    <th class='text-center' width='15%'>Machine</th>  
-                    <th class='text-center' width='15%'>Schedule Date</th>
-                    <th class='text-center' width='15%'>Service Date</th>
-                    <th class='text-center' width='15%'> Service By</th>
+                    <th class='text-center'>Address</th>  
+                    <th class='text-center' >Machine</th>  
+                    <th class='text-center' >Schedule Date</th>
+                    <th class='text-center' >Service Date</th>
+                    <th class='text-center' > Service By</th>
+					<th class='text-center' >Reported Problem</th>
                             </tr>";
                         } elseif ($table_name == "contract_status") {
                             echo "
